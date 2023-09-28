@@ -9,15 +9,19 @@ import { delay, first, take, tap } from 'rxjs';
 })
 export class CoursesService {
 
-  private readonly api = 'api/courses';
+  private readonly API = 'api/courses';
 
   constructor(private httpClient: HttpClient) { }
 
   list(){
-    return this.httpClient.get<Course[]>(this.api).pipe(
+    return this.httpClient.get<Course[]>(this.API).pipe(
       // first(),
       take(1),
       tap(courses => console.log(courses))
     );
+  }
+
+  save(record: Course){
+    return this.httpClient.post<Course>(this.API, record).pipe(first());
   }
 }
